@@ -1,7 +1,7 @@
 (function () {
 
     // ─── FORA DO PROVADOR: calcados e bolsas ───
-    var PL_RE_BLOQ = /(bota|botina|coturno|sapatilha|sapato|scarpin|mocassim|mocassin|sand[aá]lia|sand|papete|rasteir|flat|t[eê]nis|chinelo|tamanco|mule|slide|anabela|peep\s?toe|salto|bolsa|clutch|mochila|carteira|necess[aá]ire)/i;   // calcados e bolsas fora do provador
+    var PL_RE_BLOQ = /(bolsa|clutch|mochila|carteira|necessaire|necessáire)/i;   // calcados liberados: vao pro motor proprio
 
     // ─── FOTO DA VARIANTE SELECIONADA (Nuvemshop) ──────────────────────────────
     // Trocar a cor NAO muda a imagem principal nem a og:image neste tema, entao o
@@ -31,9 +31,9 @@
 
     function plProdutoBloqueado() {
         try {
-            if (document.querySelector('.breadcrumbs a.crumb[href*="/calcados"], .breadcrumbs a.crumb[href*="/bolsas"]')) return true;
+            if (document.querySelector('.breadcrumbs a.crumb[href*="/bolsas"]')) return true;
             var bc = document.querySelector('.breadcrumbs');
-            if (bc && /calçados|calcados|bolsas/i.test(bc.textContent || '')) return true;
+            if (bc && /bolsas/i.test(bc.textContent || '')) return true;
             var nm = (document.querySelector('h1.js-product-name, h1[itemprop="name"], h1') || {}).textContent || document.title || '';
             if (PL_RE_BLOQ.test(nm)) return true;
         } catch (e) {}
@@ -99,6 +99,19 @@
     window.PROVOU_LEVOU_API_KEY = apiKey;
 
     const WEBHOOK_PROVA = 'https://n8n.segredosdodrop.com/webhook/quantic-materialize';
+    // Calcado nao funciona no motor de vestuario (virtual-try-on): vai pro gerador
+    // de calcados, que usa o mesmo modelo do de oculos com prompt proprio.
+    const WEBHOOK_PROVA_CALCADO = 'https://n8n.segredosdodrop.com/webhook/quantic-materialize-carminito';
+    var PL_RE_CALCADO = /(bota|botina|coturno|sapatilha|sapato|scarpin|mocassim|mocassin|sand[aá]lia|sand|papete|rasteir|flat|t[eê]nis|chinelo|tamanco|mule|slide|anabela|peep\s?toe|salto)/i;
+    function plEhCalcado() {
+        try {
+            if (document.querySelector('.breadcrumbs a.crumb[href*="/calcados"]')) return true;
+            var bc = document.querySelector('.breadcrumbs');
+            if (bc && /calçados|calcados/i.test(bc.textContent || '')) return true;
+            var nm = (document.querySelector('h1.js-product-name, h1[itemprop="name"], h1') || {}).textContent || document.title || '';
+            return PL_RE_CALCADO.test(nm);
+        } catch (e) { return false; }
+    }
     const WEBHOOK_PIX = 'https://n8n.segredosdodrop.com/webhook/arcsunglasses-pix';
     const WEBHOOK_PIX_STATUS = 'https://n8n.segredosdodrop.com/webhook/arcsunglasses-pix-status';
     const WEBHOOK_CHECK_LIMIT = 'https://n8n.segredosdodrop.com/webhook/luzzi-check-limit';
@@ -1880,7 +1893,8 @@ const fd = new FormData();
 
                     calculateFinalSize();
 
-                    const res = await fetch(WEBHOOK_PROVA, { method: 'POST', body: fd });
+                    const _motor = plEhCalcado() ? WEBHOOK_PROVA_CALCADO : WEBHOOK_PROVA;
+                    const res = await fetch(_motor, { method: 'POST', body: fd });
 
                     const contentType = res.headers.get("content-type") || "";
                     if (contentType.includes("application/json")) {
