@@ -789,7 +789,7 @@
                         </label>
 
                         <div id="q-validation-hint" class="q-validation-hint"></div>
-                        <button class="q-btn-black" id="q-btn-generate">Provar &#243;culos</button>
+                        <button class="q-btn-black" id="q-btn-generate">Provar roupa</button>
                     </div>
 
                     <!-- PIX -->
