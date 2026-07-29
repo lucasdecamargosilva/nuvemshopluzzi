@@ -471,6 +471,16 @@
         }
         .q-btn-black:hover:not(:disabled) { opacity: 0.82; }
         .q-btn-black:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* ── Paleta Luzzi ─────────────────────────────────────────────── */
+        #q-modal-ia .q-btn-black { background: #747c6c !important; color: #fff !important; }
+        #q-modal-ia .q-btn-black:hover:not(:disabled) { background: #616858 !important; opacity: 1 !important; }
+        #q-modal-ia .q-btn-outline { border-color: #747c6c !important; color: #747c6c !important; }
+        #q-modal-ia .q-btn-outline:hover,
+        #q-modal-ia .q-upload-btn:hover { border-color: #747c6c !important; background: #f0eeeb !important; color: #747c6c !important; }
+        #q-modal-ia .q-section-label, #q-modal-ia .q-tip-box i { color: #747c6c !important; }
+        #q-modal-ia .q-tip-box { background: #f0eeeb !important; }
+
         .q-btn-outline {
             width: 100%; height: 52px;
             background: transparent; color: var(--c-ink);
@@ -1073,7 +1083,7 @@
         openBtn.innerHTML = stampImageHTML;
 
 
-        const imgContainers = ['.js-product-slide', '.product-image-column', '.js-swiper-product', '[data-store^="product-image-"]', '.product__media-wrapper', '.product-gallery__media', '.product__media', '.product-image-main', '.product-media-container', '[data-media-id]', '.product__media-item', '.product-gallery', '.product-single__media', '.media-gallery'];
+        const imgContainers = ['.js-swiper-product', '.product-image-column', '.js-product-slide', '[data-store^="product-image-"]', '.product__media-wrapper', '.product-gallery__media', '.product__media', '.product-image-main', '.product-media-container', '[data-media-id]', '.product__media-item', '.product-gallery', '.product-single__media', '.media-gallery'];
 
         function tryPlaceTriggerBtn() {
             // 1ª prioridade: container que tenha <img> dentro (evita cair em slide de vídeo)
@@ -1098,6 +1108,12 @@
             }
             return false;
         }
+
+        // Mantem o selo no ar: se o tema re-renderizar a galeria (troca de foto),
+        // o botao e reinserido em vez de sumir.
+        setInterval(function () {
+            try { if (!openBtn.isConnected) tryPlaceTriggerBtn(); } catch (e) {}
+        }, 1200);
 
         if (!tryPlaceTriggerBtn()) {
             // Container não pronto ainda (ex: após F5 no mobile).
