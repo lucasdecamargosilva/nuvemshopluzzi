@@ -606,7 +606,7 @@
                 var _ib = document.createElement('button');
                 _ib.type = 'button';
                 _ib.id = 'mc-open-inline';
-                _ib.textContent = 'PROVAR VIRTUALMENTE';
+                _ib.textContent = 'PROVADOR VIRTUAL';
                 _ib.style.cssText = [
                     'width:100%',
                     'box-sizing:border-box',
