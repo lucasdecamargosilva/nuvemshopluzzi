@@ -1819,7 +1819,10 @@ const fd = new FormData();
                     // 1ª = prodImg (escolhida pelo cliente ou default); demais = extractImages() exceto a 1ª.
                     let allProdImgs = [];
                     if (prodImg) allProdImgs.push(prodImg);
-                    try {
+                    // Variante resolvida => manda SO a foto dela. A galeria tem as fotos
+                    // das OUTRAS cores; mandar junto fazia o gerador usar a cor errada.
+                    var _ehVariante = !!plVariantImage();
+                    if (!_ehVariante) try {
                         if (typeof extractImages === 'function') {
                             const extra = extractImages();
                             for (const u of extra) {
@@ -1836,7 +1839,7 @@ const fd = new FormData();
                     // Sem rosto detectado → mantém as fotos default (fallback, sem regressão).
                     try {
                         if (faceDetectPromise) { await Promise.race([faceDetectPromise, new Promise(function (r) { setTimeout(r, 4000); })]); }
-                        if (_faceUrls && _faceUrls.length) {
+                        if (!_ehVariante && _faceUrls && _faceUrls.length) {
                             var _key = function (u) { return String(u || '').split('?')[0]; };
                             var _faceKeys = {};
                             _faceUrls.forEach(function (u) { _faceKeys[_key(u)] = 1; });
