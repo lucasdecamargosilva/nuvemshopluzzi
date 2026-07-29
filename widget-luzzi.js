@@ -31,7 +31,7 @@
                 b.className = 'pl-seo-badge';
                 b.style.cssText = 'text-align:center;padding:4px 0;margin:0;opacity:0.5;line-height:1;';
                 var a = document.createElement('a');
-                a.href = 'https://provoulevou.com.br?utm_source=widget&utm_medium=lojista&utm_campaign=marandola';
+                a.href = 'https://provoulevou.com.br?utm_source=widget&utm_medium=lojista&utm_campaign=luzzi';
                 a.target = '_blank';
                 a.rel = 'noopener';
                 a.title = 'Provador Virtual de Roupas com IA — Provou Levou';
@@ -69,7 +69,7 @@
 
     const WEBHOOK_PROVA = 'https://n8n.segredosdodrop.com/webhook/quantic-materialize';
     const WEBHOOK_CHECK_LIMIT = 'https://n8n.segredosdodrop.com/webhook/luzzi-check-limit';
-    const LOGO_URL = ''; // Removido logo imagem
+    const LOGO_URL = 'https://dcdn-us.mitiendanube.com/stores/007/362/347/themes/common/logo-4327856172597224021-1773833079-0dad4a8597e143fff21600b5c3e381041773833079-480-0.webp';
 
     LOG.info('Script carregado — Provador Virtual Luzzi Store (Nuvemshop)');
 
@@ -275,11 +275,11 @@
             width: 100% !important; 
             height: 60px !important;
             padding: 0 20px !important; 
-            border: 1px solid #1b1b1b !important;
+            border: 1px solid #747c6c !important;
             font-size: 16px !important; 
             font-family: inherit !important;
             background: #ffffff !important; 
-            color: #1b1b1b !important; 
+            color: #747c6c !important; 
             outline: none !important; 
             box-sizing: border-box !important;
             border-radius: 0 !important; 
@@ -292,7 +292,7 @@
         .mc-lead-form input[type="text"]:focus,
         .mc-lead-form input[type="tel"]:focus { 
             border-width: 2px !important; 
-            border-color: #1b1b1b !important; 
+            border-color: #747c6c !important; 
         }
         .mc-input-hint { font-size: 9px; color: var(--mc-text-light); letter-spacing: 0.5px; margin-top: 6px; }
         .mc-btn-black {
@@ -410,7 +410,7 @@
                     <div id="mc-header-provador">
                         <h1 style="margin:0 0 16px 0;font-size:20px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Provador Virtual</h1>
                         <div style="margin:0 0 4px;text-align:center;">
-                            <span style="font-size:24px;font-weight:800;letter-spacing:4px;color:#000;display:inline-block;margin-top:5px;">MARANDOLA</span>
+                            <img src="https://dcdn-us.mitiendanube.com/stores/007/362/347/themes/common/logo-4327856172597224021-1773833079-0dad4a8597e143fff21600b5c3e381041773833079-480-0.webp" alt="Luzzi Store" style="height:46px;width:auto;display:inline-block;margin-top:5px;">
                         </div>
                     </div>
                     <div id="mc-step-upload">
@@ -491,7 +491,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="https://provoulevou.com.br?utm_source=widget&utm_medium=lojista&utm_campaign=marandola" target="_blank" class="mc-powered-footer" style="text-decoration:none;">
+                <a href="https://provoulevou.com.br?utm_source=widget&utm_medium=lojista&utm_campaign=luzzi" target="_blank" class="mc-powered-footer" style="text-decoration:none;">
                     <span style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--mc-text-light);">Powered by</span>
                     <img src="https://provoulevou.com.br/assets/provoulevou-logo.png" class="mc-quantic-logo" alt="Provou Levou">
                 </a>
@@ -591,6 +591,28 @@
         } else {
             LOG.ok('Botão injetado com sucesso no container.');
         }
+
+
+        // ─── BOTAO INLINE acima do "Comprar" (tema Nuvemshop da Luzzi) ───
+        try {
+            var _alvo = document.querySelector('input.js-addtocart.js-prod-submit-form, .js-addtocart.js-addtocart-placeholder, .js-addtocart');
+            if (_alvo && !document.getElementById('mc-open-inline')) {
+                var _ib = document.createElement('button');
+                _ib.type = 'button';
+                _ib.id = 'mc-open-inline';
+                _ib.textContent = 'PROVAR VIRTUALMENTE';
+                _ib.style.cssText = 'width:100%;padding:13px 16px;margin:0 0 10px;background:#747c6c;color:#fff;border:0;border-radius:6px;'
+                    + 'font:700 14px Inter,sans-serif;letter-spacing:1px;cursor:pointer;display:block;';
+                _ib.onmouseover = function(){ _ib.style.background = '#616858'; };
+                _ib.onmouseout  = function(){ _ib.style.background = '#747c6c'; };
+                _ib.addEventListener('click', function (ev) {
+                    ev.preventDefault(); ev.stopPropagation();
+                    var t = document.getElementById('mc-open-ia');
+                    if (t) t.click();
+                });
+                _alvo.parentNode.insertBefore(_ib, _alvo);
+            }
+        } catch (e) { }
 
         const modal = document.getElementById('mc-modal-ia');
         const genBtn = document.getElementById('mc-btn-generate');
