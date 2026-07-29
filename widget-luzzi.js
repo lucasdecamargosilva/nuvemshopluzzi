@@ -1803,6 +1803,9 @@ const fd = new FormData();
                     fd.append('product_type', 'top');
                     fd.append('product_fit', 'regular');
                     fd.append('api_key', keyToUse);
+                    // O gerador prioriza baixar a imagem de product_image_url. Mandamos a
+                    // foto JA resolvida da variante escolhida, senao ele usa a 1a cor.
+                    if (prodImg) fd.append('product_image_url', prodImg);
                     if (pixPaymentId) fd.append('pix_payment_id', pixPaymentId);
 
                     if ('top' === 'top') {
