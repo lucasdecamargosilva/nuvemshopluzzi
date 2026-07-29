@@ -1,7 +1,7 @@
 (function () {
 
-    // ─── FORA DO PROVADOR: calcados e bolsas (a Luzzi vende roupa, calcado e bolsa) ───
-    var PL_RE_BLOQ = /(bota|botina|coturno|sapatilha|sapato|scarpin|mocassim|mocassin|sand[aá]lia|sand|papete|rasteir\w*|flat|t[eê]nis|chinelo|tamanco|mule|slide|anabela|peep\s?toe|salto|bolsa|clutch|mochila|carteira|necess[aá]ire)/i;
+    // ─── FORA DO PROVADOR: bolsas (calcados foram liberados em 29/07) ───
+    var PL_RE_BLOQ = /(bolsa|clutch|mochila|carteira|necessaire|necessáire)/i;   // calcados LIBERADOS (29/07); bolsas seguem fora
 
     // ─── FOTO DA VARIANTE SELECIONADA (Nuvemshop) ──────────────────────────────
     // Trocar a cor NAO muda a imagem principal nem a og:image neste tema, entao o
@@ -31,9 +31,9 @@
 
     function plProdutoBloqueado() {
         try {
-            if (document.querySelector('.breadcrumbs a.crumb[href*="/calcados"], .breadcrumbs a.crumb[href*="/bolsas"]')) return true;
+            if (document.querySelector('.breadcrumbs a.crumb[href*="/bolsas"]')) return true;
             var bc = document.querySelector('.breadcrumbs');
-            if (bc && /calçados|calcados|bolsas/i.test(bc.textContent || '')) return true;
+            if (bc && /bolsas/i.test(bc.textContent || '')) return true;
             var nm = (document.querySelector('h1.js-product-name, h1[itemprop="name"], h1') || {}).textContent || document.title || '';
             if (PL_RE_BLOQ.test(nm)) return true;
         } catch (e) {}
