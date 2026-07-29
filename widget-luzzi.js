@@ -433,7 +433,7 @@
             transition: transform 0.2s;
         }
         .q-face-frame:hover { transform: scale(1.015); }
-        .q-face-frame img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .q-face-frame img { width: 100%; height: 100%; object-fit: contain; background: #f5f5f5; display: none; }
         .q-face-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .q-face-placeholder i { font-size: 72px; color: #d0d0d0; }
         /* Corner marks — clean editorial style */
@@ -590,7 +590,7 @@
             width: 100%; max-height: 56vh; background: var(--c-surface);
             overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
-        #q-result-img-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+        #q-result-img-col img { width: 100%; height: 100%; object-fit: contain; object-position: center; background: #f5f5f5; display: block; }
 
         #q-result-actions-col {
             display: flex; flex-direction: column; gap: 8px;
@@ -677,7 +677,7 @@
             display: flex; flex-direction: column; gap: 6px;
         }
         .q-related-card img {
-            width: 100%; aspect-ratio: 1/1; object-fit: cover;
+            width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #f5f5f5;
             border: 1px solid var(--c-line); display: block; border-radius: 3px;
         }
         .q-related-card-name {
@@ -709,7 +709,7 @@
             }
             .q-card-ia.is-result #q-result-img-col img {
                 width: 100% !important; height: 100% !important;
-                object-fit: cover !important; object-position: top center !important;
+                object-fit: contain !important; object-position: center !important; background: #f5f5f5;
             }
             .q-card-ia.is-result #q-result-actions-col {
                 width: 56% !important; padding: 28px 24px !important;
