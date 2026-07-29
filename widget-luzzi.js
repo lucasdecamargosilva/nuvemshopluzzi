@@ -593,18 +593,42 @@
         }
 
 
-        // ─── BOTAO INLINE acima do "Comprar" (tema Nuvemshop da Luzzi) ───
+        // ─── BOTAO INLINE acima do "Comprar" ─────────────────────────────────
+        // Espelha o botao de compra do tema (altura, fonte, espacamento, raio) para
+        // ficar identico. Fundo transparente: e acao secundaria, nao compete com a compra.
         try {
-            var _alvo = document.querySelector('input.js-addtocart.js-prod-submit-form, .js-addtocart.js-addtocart-placeholder, .js-addtocart');
+            var _alvo = document.querySelector('input.js-addtocart.js-prod-submit-form, .js-addtocart.js-prod-submit-form, .js-addtocart');
             if (_alvo && !document.getElementById('mc-open-inline')) {
+                var cs = window.getComputedStyle(_alvo);
+                var accent = (cs.backgroundColor && cs.backgroundColor !== 'rgba(0, 0, 0, 0)') ? cs.backgroundColor : '#747c6c';
+                var h = Math.round(_alvo.getBoundingClientRect().height) || 38;
+
                 var _ib = document.createElement('button');
                 _ib.type = 'button';
                 _ib.id = 'mc-open-inline';
                 _ib.textContent = 'PROVAR VIRTUALMENTE';
-                _ib.style.cssText = 'width:100%;padding:13px 16px;margin:0 0 10px;background:#747c6c;color:#fff;border:0;border-radius:6px;'
-                    + 'font:700 14px Inter,sans-serif;letter-spacing:1px;cursor:pointer;display:block;';
-                _ib.onmouseover = function(){ _ib.style.background = '#616858'; };
-                _ib.onmouseout  = function(){ _ib.style.background = '#747c6c'; };
+                _ib.style.cssText = [
+                    'width:100%',
+                    'box-sizing:border-box',
+                    'height:' + h + 'px',
+                    'padding:' + cs.padding,
+                    'margin:0 0 10px',
+                    'background:transparent',
+                    'color:' + accent,
+                    'border:1px solid ' + accent,
+                    'border-radius:' + cs.borderRadius,
+                    'font-family:' + cs.fontFamily,
+                    'font-size:' + cs.fontSize,
+                    'font-weight:' + cs.fontWeight,
+                    'letter-spacing:' + cs.letterSpacing,
+                    'line-height:' + cs.lineHeight,
+                    'text-transform:' + (cs.textTransform || 'uppercase'),
+                    'cursor:pointer',
+                    'display:block',
+                    'transition:background .18s,color .18s'
+                ].join(';') + ';';
+                _ib.onmouseover = function () { _ib.style.background = accent; _ib.style.color = '#fff'; };
+                _ib.onmouseout  = function () { _ib.style.background = 'transparent'; _ib.style.color = accent; };
                 _ib.addEventListener('click', function (ev) {
                     ev.preventDefault(); ev.stopPropagation();
                     var t = document.getElementById('mc-open-ia');
