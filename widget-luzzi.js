@@ -68,6 +68,7 @@
     window.PROVOU_LEVOU_API_KEY = apiKey;
 
     const WEBHOOK_PROVA = 'https://n8n.segredosdodrop.com/webhook/quantic-materialize';
+    const WEBHOOK_CHECK_LIMIT = 'https://n8n.segredosdodrop.com/webhook/luzzi-check-limit';
     const LOGO_URL = ''; // Removido logo imagem
 
     LOG.info('Script carregado — Provador Virtual Luzzi Store (Nuvemshop)');
@@ -703,6 +704,19 @@
 
 
             try {
+                // ─── LIMITE DIARIO (3 provas por telefone/IP) ───
+                try {
+                    const _lim = await fetch(WEBHOOK_CHECK_LIMIT, {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone: '55' + phoneInput.value.replace(/\D/g, ''), reserve: 'true' })
+                    }).then(r => r.json()).catch(() => null);
+                    if (_lim && (_lim.limited === true || _lim.allowed === false)) {
+                        window._provouLevouBusy = false;
+                        alert('Voce ja usou suas 3 provas de hoje. Volte amanha para experimentar mais pecas!');
+                        return;
+                    }
+                } catch (e) { /* falha no check nao bloqueia a prova */ }
+
                 if (confirmStep) confirmStep.style.display = 'none';
                 if (uploadStep) uploadStep.style.display = 'none';
                 const loadingBox = document.getElementById('mc-loading-box');
